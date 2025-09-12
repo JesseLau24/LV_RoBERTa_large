@@ -13,30 +13,28 @@ Model development supported by [LazyBomb.SIA].
 Inspired by the spaCy ecosystem and training framework.  
 灵感来自 spaCy 生态系统及其训练框架。
 
+---
+
 ## Overview
 ## 模型概览
 
-This is a **spaCy pipeline for Latvian**, trained using the **Tok2Vec CNN architecture**.  
-这是一个 **拉脱维亚语 spaCy 流水线**，使用 **Tok2Vec CNN 架构** 进行训练。  
+This is a **spaCy transformer-based pipeline for Latvian**, built with the **XLM-RoBERTa-large backbone**.  
+这是一个 **基于 Transformer 的拉脱维亚语 spaCy 流水线**，底层采用 **XLM-RoBERTa-large 预训练模型**。
 
 It includes the following components:  
 包含以下组件：
 
-- **Tok2Vec** (CNN-based word representations) / 基于 CNN 的词表示  
-- **Tagger** / 词性标注器  
-- **Morphologizer** / 形态分析器  
-- **Parser** / 句法分析器  
-- **Sentence Segmenter (senter)** / 分句器  
+- **Transformer** / Transformer 编码器 (XLM-RoBERTa-large)
+- **Tagger** / 词性标注器
+- **Morphologizer** / 形态分析器
+- **Parser** / 依存句法分析器
+- **Sentence Segmenter (senter)** / 分句器
 - **Lemmatizer** / 词形还原器
 
-**Model type:** Tok2Vec CNN  
-**模型类型:** Tok2Vec CNN  
-
-**Language:** Latvian (lv)  
-**语言:** 拉脱维亚语 (lv)  
-
-**Recommended hardware:** CPU for small-scale use, GPU recommended for faster training.  
-**推荐硬件:** 小规模使用可用 CPU，建议使用 GPU 提高训练速度。
+**Model type / 模型类型:** Transformer pipeline (XLM-RoBERTa-large backbone)  
+**Language / 语言:** Latvian (lv)  
+**Recommended hardware / 推荐硬件:** CPU for small-scale use, GPU recommended for faster training  
+小规模使用可用 CPU，建议使用 GPU 提高训练速度  
 
 ---
 
@@ -70,7 +68,7 @@ import numpy as np
 
 # Load the pipeline
 # 加载模型流水线
-nlp = spacy.load("lv_spacy_cnn")
+nlp = spacy.load("lv_roberta_large")
 
 # Example text
 # 示例文本
@@ -99,7 +97,6 @@ print([token.lemma_ for token in doc])
 print("POS tags / 词性标注:")
 for token in doc:
     print(f"{token.text}: {token.pos_} ({token.tag_})")
-# pos_ 是 Universal POS 标签, tag_ 是语言特定 POS 标签
 
 # ------------------------
 # Morphological Features / 形态特征
@@ -107,7 +104,6 @@ for token in doc:
 print("Morphological features / 形态特征:")
 for token in doc:
     print(f"{token.text}: {token.morph}")
-# 输出形态信息，如格、数、性别、时态等
 
 # ------------------------
 # Dependency Parsing / 依存句法分析
@@ -115,7 +111,6 @@ for token in doc:
 print("Dependency parsing / 依存句法分析:")
 for token in doc:
     print(f"{token.text} <--{token.dep_}-- {token.head.text}")
-# 输出每个 token 的依存关系及其父节点
 
 # ------------------------
 # Sentence Segmentation / 分句
@@ -125,13 +120,12 @@ for sent in doc.sents:
     print(sent.text)
 
 # ------------------------
-# 直接访问流水线组件（可选，高级用法）
+# 查看流水线组件
 # ------------------------
 print("Pipeline components / 流水线组件:")
 print(nlp.pipe_names)
 
-# Tok2Vec (词向量表示)
+# Transformer vectors
+# Transformer 向量表示
 vectors = np.vstack([token.vector for token in doc])
 print("Token vectors shape / Token 向量维度:", vectors.shape)
-
-
