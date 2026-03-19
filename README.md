@@ -1,131 +1,232 @@
+---
+language:
+- lv
+base_model:
+- FacebookAI/xlm-roberta-large
+license: cc-by-sa-4.0
+datasets:
+- universal_dependencies
+metrics:
+- accuracy
+- uas
+- las
+---
+
 # Latvian SpaCy Model: lv_roberta_large
-拉脱维亚语 SpaCy 模型：lv_roberta_large
 
-# Acknowledgements
-致谢
-
-Thanks to the University of Latvia, AI Lab, and all contributors of the Latvian UD Treebank.  
-感谢拉脱维亚大学人工智能实验室，以及拉脱维亚 UD Treebank 所有贡献者。
-
-Model development supported by [LazyBomb.SIA].  
-模型开发得到 [LazyBomb.SIA] 支持。
-
-Inspired by the spaCy ecosystem and training framework.  
-灵感来自 spaCy 生态系统及其训练框架。
+## Hugging Face Model Repo:
+https://huggingface.co/JesseHuang922/lv_roberta_large
 
 ---
 
 ## Overview
-## 模型概览
 
 This is a **spaCy transformer-based pipeline for Latvian**, built with the **XLM-RoBERTa-large backbone**.  
-这是一个 **基于 Transformer 的拉脱维亚语 spaCy 流水线**，底层采用 **XLM-RoBERTa-large 预训练模型**。
+
+**Performance Comparison**
+
+| Model        | POS    | Tag    | Morph  | UAS    | LAS    | Lemma Acc | Summary (equal weights)   |
+| ------------ | ------ | ------ | ------ | ------ | ------ | --------- | ------ |
+| spaCy (this model) | 0.9792 | 0.9267 | 0.9589 | 0.9212 | 0.8883 | 0.8203    | 91.58% |
+| Stanza       | 0.9688 | 0.8987 | 0.9449 | 0.8791 | 0.8354 | 0.9539    | 91.35% |
+| UDPipe       | 0.9207 | 0.7960 | 0.3403 | 0.0791 | 0.0660 | 0.8911    | 51.55% |
+
+Details please check cell 12 and 13 here: 
+
+https://github.com/LazyBomb-SIA/LV_RoBERTa_Large/blob/main/lv_roberta_large.ipynb
 
 It includes the following components:  
-包含以下组件：
 
-- **Transformer** / Transformer 编码器 (XLM-RoBERTa-large)
-- **Tagger** / 词性标注器
-- **Morphologizer** / 形态分析器
-- **Parser** / 依存句法分析器
-- **Sentence Segmenter (senter)** / 分句器
-- **Lemmatizer** / 词形还原器
+- **Transformer** (XLM-RoBERTa-large)
+- **Tagger**
+- **Morphologizer**
+- **Parser**
+- **Sentence Segmenter (senter)**
+- **Lemmatizer**
+- (Note: Transformer component internally uses a `tok2vec` listener)
 
-**Model type / 模型类型:** Transformer pipeline (XLM-RoBERTa-large backbone)  
-**Language / 语言:** Latvian (lv)  
-**Recommended hardware / 推荐硬件:** CPU for small-scale use, GPU recommended for faster training  
-小规模使用可用 CPU，建议使用 GPU 提高训练速度  
+**Model type:** Transformer pipeline (XLM-RoBERTa-large backbone)  
+**Language:** Latvian (lv)  
+**Recommended hardware:** CPU for small-scale use, GPU recommended for faster inference.  
 
 ---
 
 ## Training Data
-## 训练数据
 
-The model was trained on the **Latvian UD Treebank v2.16**, which is derived from the **Latvian Treebank (LVTB)** created at the University of Latvia, AI Lab.  
-本模型在 **拉脱维亚 UD Treebank v2.16** 上训练，该数据集由拉脱维亚大学 AI 实验室创建的 **LVTB** 转换而来。
+The model was trained on the **Latvian UD Treebank v2.16**, which is derived from the **Latvian Treebank (LVTB)** created at the University of Latvia, Institute of Mathematics and Computer Science, Artificial Intelligence Laboratory (AI Lab).  
 
-- **License / 许可:** CC BY-SA 4.0 (Attribution-ShareAlike) / 署名-相同方式共享 4.0 国际  
-- **Data splits / 数据划分:**  
-  - Train / 训练集: 15055 sentences / 句子  
-  - Dev / 验证集: 2080 sentences / 句子  
-  - Test / 测试集: 2396 sentences / 句子  
+- **Dataset source:** [UD Latvian LVTB](https://github.com/UniversalDependencies/UD_Latvian-LVTB)  
+- **License:** [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/)  
+- **Data splits:**  
+  - Train: 15,055 sentences  
+  - Dev: 2,080 sentences  
+  - Test: 2,396 sentences  
 
-**References / 参考文献:**  
-Pretkalniņa, L., Rituma, L., Saulīte, B., et al. (2016–2018). Various publications on LVTB and UD Treebank for Latvian.  
-Pretkalniņa, L., Rituma, L., Saulīte, B. 等（2016–2018）。关于拉脱维亚 LVTB 与 UD Treebank 的多篇论文。
+---
 
-> ⚠️ Users of this model must comply with the original CC BY-SA 4.0 license.  
-> ⚠️ 使用本模型的用户必须遵守原始 CC BY-SA 4.0 许可协议。
+## Acknowledgements
+
+- Thanks to the **University of Latvia, AI Lab**, and all contributors of the **Latvian UD Treebank**.  
+- Model development supported by [LazyBomb.SIA].  
+- Inspired by the **spaCy ecosystem** and training framework.  
+- The Latvian UD Treebank was developed with support from multiple grants, including:  
+  - European Regional Development Fund (Grant No. 1.1.1.1/16/A/219, 1.1.1.2/VIAA/1/16/188)  
+  - State Research Programme "National Identity"  
+  - State Research Programme "Digital Resources for the Humanities" (Grant No. VPP-IZM-DH-2020/1-0001)  
+  - State Research Programme "Research on Modern Latvian Language and Development of Language Technology" (Grant No. VPP-LETONIKA-2021/1-0006)  
+
+---
+
+## Special Thanks
+Special Thanks to all contributors who participated in the Beta test and espically those who provided valuable feedback
+
+**The list is waiting**
+
+---
+
+## License
+
+This model is released under the [Creative Commons Attribution-ShareAlike 4.0 International License (CC BY-SA 4.0)](https://creativecommons.org/licenses/by-sa/4.0/).
+
+You are free to:
+- **Share** — copy and redistribute the material in any medium or format, for any purpose, even commercially.  
+- **Adapt** — remix, transform, and build upon the material for any purpose, even commercially.  
+
+Under the following terms:
+- **Attribution** — You must give appropriate credit, provide a link to the license, and indicate if changes were made.  
+- **ShareAlike** — If you remix, transform, or build upon the material, you must distribute your contributions under the same license as the original.  
+
+---
+
+## References
+
+- Pretkalniņa, L., Rituma, L., Saulīte, B., et al. (2016–2025). Universal Dependencies Latvian Treebank (LVTB).  
+- Grūzītis, N., Znotiņš, A., Nešpore-Bērzkalne, G., Paikens, P., et al. (2018). Creation of a Balanced State-of-the-Art Multilayer Corpus for NLU. *LREC 2018*.  
+- Pretkalniņa, L., Rituma, L., Saulīte, B. (2016). Universal Dependency Treebank for Latvian: A Pilot. *Baltic Perspective Workshop*.  
+
+---
 
 ---
 
 ## Usage
-## 使用方法
+You can either:
+
+1. **Download the model directly from the Hugging Face Hub**  
+   Using `huggingface_hub.snapshot_download`, the model files will be automatically fetched and cached locally.
+
+      ```python
+      import spacy
+      from huggingface_hub import snapshot_download
+      
+      # Load the pipeline
+      model_dir = snapshot_download(repo_id="JesseHuang922/lv_roberta_large", repo_type="model")
+      nlp = spacy.load(model_dir)
+      ```
+
+2. **Install from the pre-built wheel package**  
+   Download the wheel file (**lv_roberta_large-1.0.0-py3-none-any.whl**) and install it into your virtual environment with:
+
+       ```bash
+       pip install lv_roberta_large-1.0.0-py3-none-any.whl
+       
+---
+
+## Dependencies
+
+The following Python packages are required to run the Latvian XLM-RoBERTa spaCy pipeline:
+
+| Package                | Minimum Version | Notes                                                                                  | 
+| ---------------------- | --------------- | -------------------------------------------------------------------------------------- | 
+| **spaCy**              | 3.8.7           | Main NLP framework                                                          | 
+| **spacy-transformers** | 1.3.9           | Integrates spaCy with Hugging Face Transformers  | 
+| **transformers**       | 4.49.0          | Hugging Face Transformers library                       | 
+| **torch**              | 2.8.0           | PyTorch backend for transformers                           | 
+| **tokenizers**         | 0.21.4          | Fast tokenizer support                                                        | 
+| **safetensors**        | 0.6.2           | Secure tensor storage for transformer weights                      | 
+| **huggingface-hub**    | 0.34.4          | Download and manage the model files from the Hugging Face Hub      |
+
+## Optional but recommended 
+| Package                | Minimum Version | Notes                                                                                  | 
+| ---------------------- | --------------- | -------------------------------------------------------------------------------------- | 
+| **hf-xet**             | 1.1.10          | if you need to download or upload large files from the Hugging Face Hub and use the Xet storage backend     |
+
+## Install all dependencies with just one command line:
+```bash
+pip install \
+spacy>=3.8.7 \
+spacy-transformers>=1.3.9 \
+transformers>=4.49.0 \
+torch>=2.8.0 \
+tokenizers>=0.21.4 \
+safetensors>=0.6.2 \
+huggingface-hub>=0.34.4 \
+hf-xet>=1.1.10
+```
+
+## Example Code
 
 ```python
 import spacy
 import numpy as np
+from huggingface_hub import snapshot_download
 
 # Load the pipeline
-# 加载模型流水线
-nlp = spacy.load("lv_roberta_large")
+model_dir = snapshot_download(repo_id="JesseHuang922/lv_roberta_large", repo_type="model")
+nlp = spacy.load(model_dir)
 
 # Example text
-# 示例文本
 text = """Baltijas jūras nosaukums ir devis nosaukumu baltu valodām un Baltijas valstīm.
 Terminu "Baltijas jūra" (Mare Balticum) pirmoreiz lietoja vācu hronists Brēmenes Ādams 11. gadsimtā."""
 
 # Process text
-# 处理文本
 doc = nlp(text)
 
 # ------------------------
-# Tokenization / 分词
+# Tokenization 
 # ------------------------
-print("Tokens / 分词结果:")
+print("Tokens:")
 print([token.text for token in doc])
 
 # ------------------------
-# Lemmatization / 词形还原
+# Lemmatization
 # ------------------------
-print("Lemmas / 词形还原结果:")
+print("Lemmas:")
 print([token.lemma_ for token in doc])
 
 # ------------------------
-# Part-of-Speech Tagging / 词性标注
+# Part-of-Speech Tagging
 # ------------------------
-print("POS tags / 词性标注:")
+print("POS tags:")
 for token in doc:
     print(f"{token.text}: {token.pos_} ({token.tag_})")
 
 # ------------------------
-# Morphological Features / 形态特征
+# Morphological Features
 # ------------------------
-print("Morphological features / 形态特征:")
+print("Morphological features:")
 for token in doc:
     print(f"{token.text}: {token.morph}")
 
 # ------------------------
-# Dependency Parsing / 依存句法分析
+# Dependency Parsing
 # ------------------------
-print("Dependency parsing / 依存句法分析:")
+print("Dependency parsing:")
 for token in doc:
     print(f"{token.text} <--{token.dep_}-- {token.head.text}")
 
 # ------------------------
-# Sentence Segmentation / 分句
+# Sentence Segmentation
 # ------------------------
-print("Sentences / 分句结果:")
+print("Sentences:")
 for sent in doc.sents:
     print(sent.text)
 
 # ------------------------
-# 查看流水线组件
+# Check Pipeline Components
 # ------------------------
-print("Pipeline components / 流水线组件:")
+print("Pipeline components:")
 print(nlp.pipe_names)
 
 # Transformer vectors
-# Transformer 向量表示
 vectors = np.vstack([token.vector for token in doc])
-print("Token vectors shape / Token 向量维度:", vectors.shape)
+print("Token vectors shape:", vectors.shape)
